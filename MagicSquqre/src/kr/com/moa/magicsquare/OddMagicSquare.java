@@ -11,32 +11,44 @@ public class OddMagicSquare {
 	
 	void makeMagicSquare() {
 		
-		int arrI = magicSquareSize - 1;
-		int arrJ = magicSquareSize / 2;
-		int count = 1;
+		int count = startPoint();
 		
 		magicSquare[arrI][arrJ] = count++;
 		
-		while(true) {
-			if (magicSquare[arrI+1][arrJ+1] == 0) {
-				magicSquare[++arrI][++arrJ] = count++;
+		while(!isFinish()) {
+			if(isMoveEmpty()) {
+				count = move();
+			}
+			else if(isMoveUpEmpty()) {
+				break;
 			}
 			else {
-				arrI--;
-				if (arrI == -1) {
-					arrI = magicSquareSize - 1;
-				}
-				if(magicSquare[arrI][arrJ] != 0) {
-					break;
-				}
-				magicSquare[arrI][arrJ] = count++;
+				
+				count = moveUp();
 			}
+//			if (magicSquare[(arrI+1) % magicSquareSize][(arrJ+1) % magicSquareSize] == 0) {
+//				
+//				arrI = arrI % magicSquareSize;
+//				arrJ = arrJ % magicSquareSize;
+//				
+//				magicSquare[++arrI][++arrJ] = count++;
+//			}
+//			else {
+//				arrI--;
+//				if (arrI == -1) {
+//					arrI = magicSquareSize - 1;
+//				}
+//				if(magicSquare[arrI][arrJ] != 0) {
+//					break;
+//				}
+//				magicSquare[arrI][arrJ] = count++;
+//			}
 		}
 		initArr();
 		
 	}
 	
-	void initArr() {
+	protected void initArr() {
 		
 		for (int i= 0; i < this.magicSquareSize; i++) {
 			for(int j = 0; j < this.magicSquareSize; j++) {
@@ -45,6 +57,10 @@ public class OddMagicSquare {
 		}	
 	}
 	
+	private void startPoint() {
+		this.arrI = magicSquareSize - 1;
+		this.arrJ = magicSquareSize / 2;
+	}
 	void printArr() {
 		for (int i= 0; i < this.magicSquareSize; i++) {
 			for(int j = 0; j < this.magicSquareSize; j++) {
